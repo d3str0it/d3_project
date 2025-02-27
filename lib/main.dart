@@ -9,8 +9,9 @@ import 'package:it4gaz/src/screens/tables/tables_screen.dart';
 import 'package:it4gaz/src/screens/visualization/visualization_screen.dart';
 import 'package:it4gaz/src/services/bloc_observer.dart';
 import 'package:it4gaz/src/services/navigation_service.dart';
+import 'package:it4gaz/src/widgets/navigation_button_widget.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MainBlocObserver();
 
@@ -34,14 +35,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
-  @override
-  _MainScreenState createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: BlocBuilder<NavigationService, List<Widget>>(
@@ -68,48 +64,53 @@ class _MainScreenState extends State<MainScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 35, left: 35),
-                    child: Image.asset(
-                      'assets/logo/it4gaz_logo.jpg',
-                    ),
+                    child:
+                        Assets.logo.it4gazLogo.image(width: 100, height: 100),
                   ),
                   const SizedBox(height: 35),
                   Column(
                     children: [
-                      _buildButton(
-                          Assets.icons.homeIcon.image(),
-                          'Главная',
-                          const HomeScreen(),
-                          state.isNotEmpty
-                              ? state.last
-                              : const SizedBox.shrink()),
-                      _buildButton(
-                          Assets.icons.tabIcon.image(),
-                          'Таблица',
-                          const TablesScreen(),
-                          state.isNotEmpty
-                              ? state.last
-                              : const SizedBox.shrink()),
-                      _buildButton(
-                          Assets.icons.graphIcon.image(),
-                          'Графики',
-                          const ChartsScreen(),
-                          state.isNotEmpty
-                              ? state.last
-                              : const SizedBox.shrink()),
-                      _buildButton(
-                          Assets.icons.diogIcon.image(),
-                          'Аналитика',
-                          const AnalyticsScreen(),
-                          state.isNotEmpty
-                              ? state.last
-                              : const SizedBox.shrink()),
-                      _buildButton(
-                          Assets.icons.boxIcon.image(),
-                          'Визуализация',
-                          const VisualizationScreen(),
-                          state.isNotEmpty
-                              ? state.last
-                              : const SizedBox.shrink()),
+                      NavigationButtonWidget(
+                        navigateTo: const HomeScreen(),
+                        label: 'Главная',
+                        icon: CupertinoIcons.house,
+                        isSelected: state.isNotEmpty
+                            ? state.last.runtimeType == HomeScreen
+                            : false,
+                      ),
+                      NavigationButtonWidget(
+                        navigateTo: const TablesScreen(),
+                        label: 'Таблица',
+                        icon: CupertinoIcons.table,
+                        isSelected: state.isNotEmpty
+                            ? state.last.runtimeType == TablesScreen
+                            : false,
+                      ),
+                      NavigationButtonWidget(
+                        navigateTo: const ChartsScreen(),
+                        label: 'Графики',
+                        icon: CupertinoIcons.chart_bar_square,
+                        isSelected: state.isNotEmpty
+                            ? state.last.runtimeType == ChartsScreen
+                            : false,
+                      ),
+                      NavigationButtonWidget(
+                        navigateTo: const AnalyticsScreen(),
+                        label: 'Аналитика',
+                        icon: CupertinoIcons.chart_pie,
+                        isSelected: state.isNotEmpty
+                            ? state.last.runtimeType == AnalyticsScreen
+                            : false,
+                      ),
+                      NavigationButtonWidget(
+                        navigateTo: const VisualizationScreen(),
+                        label: 'Визуализация',
+                        icon: CupertinoIcons
+                            .rectangle_arrow_up_right_arrow_down_left,
+                        isSelected: state.isNotEmpty
+                            ? state.last.runtimeType == VisualizationScreen
+                            : false,
+                      ),
                     ],
                   ),
                 ],
@@ -140,63 +141,5 @@ class _MainScreenState extends State<MainScreen> {
         );
       },
     ));
-  }
-
-  Widget _buildButton(
-      Widget icon, String label, Widget navigateTo, Widget currentContent) {
-    bool isSelected = currentContent == navigateTo;
-    bool isHovering = false;
-
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-          child: MouseRegion(
-            onEnter: (event) {
-              setState(() {
-                isHovering = true;
-              });
-            },
-            onExit: (event) {
-              setState(() {
-                isHovering = false;
-              });
-            },
-            cursor: SystemMouseCursors.click,
-            child: SizedBox(
-              width: double.infinity,
-              height: 40,
-              child: CupertinoButton(
-                onPressed: () {
-                  BlocProvider.of<NavigationService>(context)
-                      .navigateTo(navigateTo);
-                },
-                padding: const EdgeInsets.all(10),
-                color: isSelected || isHovering
-                    ? const Color.fromARGB(104, 177, 55, 201)
-                    : const Color.fromARGB(255, 255, 255, 255),
-                borderRadius: BorderRadius.circular(8),
-                child: Row(
-                  children: [
-                    icon,
-                    const SizedBox(width: 5),
-                    Text(
-                      label,
-                      style: TextStyle(
-                        color: isSelected || isHovering
-                            ? Colors.black
-                            : const Color.fromARGB(255, 0, 0, 0),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
   }
 }
