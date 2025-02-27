@@ -1,0 +1,1 @@
+const String apiUrl = 'https://it4gaz-api.onrender.com/api/v1/';
