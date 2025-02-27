@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   bloc: ^9.0.0
+  fl_chart: ^0.55.1
   flutter_bloc: ^9.0.0
   logger: ^2.5.0
   flutter_gen: ^5.9.0
@@ -37,6 +38,8 @@ flutter:
 
   assets:
     - assets/logo/it4gaz_logo.jpg
+    - assets/icons/clock.png
+    - assets/icons/warning_icon.png
     - assets/icons/box_icon.png
     - assets/icons/diog_icon.png
     - assets/icons/graph_icon.png
