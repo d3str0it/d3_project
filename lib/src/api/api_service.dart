@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:it4gaz/src/api/data/requests/analyze_request_model.dart';
 import 'package:it4gaz/src/api/data/requests/sensor_request_model.dart';
+import 'package:it4gaz/src/api/data/responces/analyze_responce.dart';
 import 'package:it4gaz/src/api/data/responces/sensor_response.dart';
 import 'package:it4gaz/src/core/constants/strings.dart';
 import 'package:logger/logger.dart';
@@ -34,6 +38,12 @@ abstract class RestClient {
     ));
     return _RestClient(dio);
   }
+
+  @POST('/data/analyze')
+  @MultiPart()
+  Future<AnalyzeResponce> analyze({
+    @Part() required MultipartFile file,
+  });
 
   @POST('/analyze/sensor/T1')
   Future<SensorResponse> getSensors(

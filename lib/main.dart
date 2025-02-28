@@ -6,6 +6,7 @@ import 'package:it4gaz/gen/assets.gen.dart';
 import 'package:it4gaz/src/api/api_service.dart';
 import 'package:it4gaz/src/api/data/requests/filter_model.dart';
 import 'package:it4gaz/src/api/data/requests/sensor_request_model.dart';
+import 'package:it4gaz/src/controllers/load_data_controller.dart';
 import 'package:it4gaz/src/core/di/service_locator.dart';
 import 'package:it4gaz/src/screens/analytics/analytics_screen.dart';
 import 'package:it4gaz/src/screens/charts/charts_screen.dart';
@@ -23,20 +24,6 @@ void main() async {
 
   Bloc.observer = MainBlocObserver();
 
-  final restClient = ServiceLocator.injector.get<RestClient>();
-  await restClient
-      .getSensors(
-          request: SensorRequestModel(
-              page: 1,
-              pageSize: 50,
-              filters: FilterModel(
-                  sensorType: "K",
-                  sensorIndex: "1",
-                  timeStart: DateTime(2024, 1, 1, 0, 0, 0),
-                  timeEnd: DateTime(2024, 1, 1, 23, 59, 59))))
-      .then((value) {
-    print(value.sensors);
-  });
 
   runApp(const MyApp());
 }
@@ -53,6 +40,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => NavigationService()),
+        BlocProvider(create: (context) => LoadDataController()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
