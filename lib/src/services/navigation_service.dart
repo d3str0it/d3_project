@@ -5,7 +5,12 @@ class NavigationService extends Cubit<List<Widget>> {
   NavigationService() : super([]);
 
   void navigateTo(Widget screen) {
-    emit([...state, screen]);
+    final newState = [...state, screen];
+    if (newState.length > 3) {
+      emit(newState.sublist(newState.length - 3));
+    } else {
+      emit(newState);
+    }
   }
 
   void goBack() {

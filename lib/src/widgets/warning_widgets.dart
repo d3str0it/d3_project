@@ -26,13 +26,27 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      margin: const EdgeInsets.symmetric(vertical: 4),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+      decoration: BoxDecoration(
+        color: Colors.white, 
+        borderRadius: BorderRadius.circular(10), 
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromARGB(48, 0, 0, 0), 
+            blurRadius: 5, 
+            spreadRadius: 2, 
+            offset: const Offset(0, 2), 
+          ),
+        ],
+      ),
       child: Column(
         children: [
           Container(
-            color: const Color(0xFFFFFF),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 255, 255, 255),
+              borderRadius: BorderRadius.circular(10),
+            ),
             padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,22 +68,27 @@ class NotificationCard extends StatelessWidget {
               ],
             ),
           ),
+          const Divider(),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Значение: ${notification.title}',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 4),
-                Text('достигла уровня Критический',
-                style: const TextStyle(fontWeight: FontWeight.bold),),
-              ],
+            child: Container(
+             
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Значение: ${notification.title}',
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'достигла уровня: Критический',
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                ],
+              ),
             ),
           ),
-          const Divider(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -80,28 +99,22 @@ class NotificationCard extends StatelessWidget {
                     Image.asset(Assets.icons.clockIcon.path),
                     const SizedBox(width: 4),
                     Text(
-                     '${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}, ${notification.timeReceived.hour}:${notification.timeReceived.minute.toString().padLeft(2, '0')}',
+                      '${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}, ${notification.timeReceived.hour}:${notification.timeReceived.minute.toString().padLeft(2, '0')}',
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
                 ),
-                 ElevatedButton.icon(
-                      onPressed: () {
-                        
-                      },
-                      icon: const Icon(Icons.arrow_forward, size: 14),
-                      label: const Text('Перейти'),
-                      style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 12),
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      // NavigationButtonWidget(
-                      //   navigateTo: const TablesScreen(),
-                      //   label: 'Перейти',
-                      //   icon: Icons.arrow_forward_ios,
-                      //   isSelected: false,
-                      // )
-                      ),
-                 ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                         
+                  },
+                  icon: const Icon(Icons.arrow_forward, size: 14),
+                  label: const Text('Перейти'),
+                  style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  ),
+                ),
               ],
             ),
           ),
@@ -110,7 +123,6 @@ class NotificationCard extends StatelessWidget {
     );
   }
 }
-
 
 class NotificationList extends StatefulWidget {
   @override
@@ -123,8 +135,8 @@ class _NotificationListState extends State<NotificationList> {
   @override
   void initState() {
     super.initState();
-    // Заполняем список уведомлений одинаковыми элементами
-    for (int i = 0; i < 10; i++) { // 10 раз повторить
+    
+    for (int i = 0; i < 10; i++) { 
       notifications.add(
         NotificationItem(
           title: "Уведомление ${i + 1}",
@@ -151,18 +163,18 @@ class _NotificationListState extends State<NotificationList> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 60, top: 22, right: 80),
+          padding: const EdgeInsets.only(left: 40, top: 22, right: 80),
           child: Container(
-            width: 500,
-            height: 800,
+            width: 450,
+            height: 900,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 2,
-                  blurRadius: 7,
-                  offset: const Offset(0, 3),
+                  color: const Color.fromARGB(48, 0, 0, 0),
+                  blurRadius: 8,
+                  spreadRadius: 1,
+                  offset: const Offset(1, 0),
                 ),
               ],
             ),

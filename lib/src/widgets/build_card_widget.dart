@@ -20,8 +20,8 @@ class CardWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 25, left: 40),
       child: Container(
-        height: 250,
-        width: 400,
+        height: 280,
+        width: 470,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -50,7 +50,7 @@ class CardWidget extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 34,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -63,7 +63,7 @@ class CardWidget extends StatelessWidget {
               child: Text(
                 description,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 20,
                   color: Colors.grey,
                 ),
               ),

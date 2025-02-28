@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:it4gaz/gen/assets.gen.dart';
+import 'package:it4gaz/src/core/di/service_locator.dart';
 import 'package:it4gaz/src/screens/analytics/analytics_screen.dart';
 import 'package:it4gaz/src/screens/charts/charts_screen.dart';
 import 'package:it4gaz/src/screens/home/home_screen.dart';
@@ -13,9 +14,16 @@ import 'package:it4gaz/src/widgets/navigation_button_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
   Bloc.observer = MainBlocObserver();
+  
+  await setupLocator();
 
   runApp(const MyApp());
+}
+
+Future<void> setupLocator() async {
+  await ServiceLocator.setup();
 }
 
 class MyApp extends StatelessWidget {
@@ -24,6 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
+      
       providers: [
         BlocProvider(create: (context) => NavigationService()),
       ],

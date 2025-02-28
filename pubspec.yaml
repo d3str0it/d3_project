@@ -12,11 +12,15 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   bloc: ^9.0.0
-  fl_chart: ^0.55.1
+  fl_chart: ^0.70.2
   flutter_bloc: ^9.0.0
   logger: ^2.5.0
   flutter_gen: ^5.9.0
+
+  get_it: ^7.2.0
   pressable: ^0.7.0
+  retrofit: ^4.0.3
+  json_annotation: ^4.8.1
 
 dev_dependencies:
   flutter_test:
