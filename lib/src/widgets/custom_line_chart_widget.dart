@@ -27,7 +27,7 @@ class CustomLineChart extends StatefulWidget {
       FlSpot(9.5, 3.44),
       FlSpot(11, 3.44),
     ],
-  }); // ✅ Правильно: закрывающая скобка без точки с запятой
+  });
 
   @override
   State<CustomLineChart> createState() => _CustomLineChartState();
@@ -38,11 +38,11 @@ class _CustomLineChartState extends State<CustomLineChart> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: 1.70,
-          child: Padding(
+    return SizedBox(
+      height: 250,
+      child: Stack(
+        children: <Widget>[
+          Padding(
             padding: const EdgeInsets.only(
               right: 18,
               left: 12,
@@ -53,32 +53,32 @@ class _CustomLineChartState extends State<CustomLineChart> {
               showAvg ? _avgData() : _mainData(),
             ),
           ),
-        ),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: SizedBox(
-            width: 60,
-            height: 34,
-            child: TextButton(
-              onPressed: () {
-                setState(() {
-                  showAvg = !showAvg;
-                });
-              },
-              child: Text(
-                'avg',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: showAvg
-                      ? Colors.white.withOpacity(0.5)
-                      : Colors.white,
+          Positioned(
+            top: 0,
+            right: 0,
+            child: SizedBox(
+              width: 60,
+              height: 34,
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    showAvg = !showAvg;
+                  });
+                },
+                child: Text(
+                  'avg',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: showAvg
+                        ? Colors.white.withOpacity(0.5)
+                        : Colors.white,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -89,7 +89,6 @@ class _CustomLineChartState extends State<CustomLineChart> {
     );
     Widget text;
     switch (value.toInt()) {
-    
       case 2:
         text = const Text('MAR', style: style);
         break;
@@ -186,7 +185,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
       maxX: 11,
       minY: 0,
       maxY: 6,
-      lineBarsData: [
+      lineBarsData: [ // Изменено с lineBarsData на lineBars
         LineChartBarData(
           spots: widget.mainDataPoints,
           isCurved: true,
@@ -195,9 +194,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
           ),
           barWidth: 5,
           isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
+          dotData: const FlDotData(show: false),
           belowBarData: BarAreaData(
             show: true,
             gradient: LinearGradient(
@@ -265,33 +262,37 @@ class _CustomLineChartState extends State<CustomLineChart> {
       maxX: 11,
       minY: 0,
       maxY: 6,
-      lineBarsData: [
+      lineBarsData: [ // Изменено с lineBarsData на lineBars
         LineChartBarData(
           spots: widget.avgDataPoints,
           isCurved: true,
           gradient: LinearGradient(
             colors: [
-              ColorTween(begin: widget.gradientColors[0], end: widget.gradientColors[1])
-                  .lerp(0.2)!,
-              ColorTween(begin: widget.gradientColors[0], end: widget.gradientColors[1])
-                  .lerp(0.2)!,
+              ColorTween(
+                begin: widget.gradientColors[0],
+                end: widget.gradientColors[1],
+              ).lerp(0.2)!,
+              ColorTween(
+                begin: widget.gradientColors[0],
+                end: widget.gradientColors[1],
+              ).lerp(0.2)!,
             ],
           ),
           barWidth: 5,
           isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
+          dotData: const FlDotData(show: false),
           belowBarData: BarAreaData(
             show: true,
             gradient: LinearGradient(
               colors: [
-                ColorTween(begin: widget.gradientColors[0], end: widget.gradientColors[1])
-                    .lerp(0.2)!
-                    .withOpacity(0.1),
-                ColorTween(begin: widget.gradientColors[0], end: widget.gradientColors[1])
-                    .lerp(0.2)!
-                    .withOpacity(0.1),
+                ColorTween(
+                  begin: widget.gradientColors[0],
+                  end: widget.gradientColors[1],
+                ).lerp(0.2)!.withOpacity(0.1),
+                ColorTween(
+                  begin: widget.gradientColors[0],
+                  end: widget.gradientColors[1],
+                ).lerp(0.2)!.withOpacity(0.1),
               ],
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:it4gaz/src/screens/charts/CustomLineChart.dart';
+import 'package:it4gaz/src/widgets/custom_line_chart_widget.dart';
 import 'package:it4gaz/src/widgets/input_date_interval_widget.dart';
 import 'package:it4gaz/src/widgets/line_chart_widget.dart';
 
@@ -12,15 +12,21 @@ class ChartsScreen extends StatefulWidget {
 }
 
 class _ChartsScreenState extends State<ChartsScreen> {
-  // Добавляем состояние для выбранной группы датчиков
   String selectedSensorGroup = 'Tn_K_m';
+  String selectedTimeInterval = 'За час';
   
-  // Цвета для маркеров датчиков
   final List<Color> sensorColors = const [
     Color(0xffA700FF),
     Color(0xffEF4444),
     Color(0xff3CD856),
   ];
+
+  final Map<String, List<double>> timeIntervalData = {
+    'За час': [12, 9, 7],
+    'За сутки': [24, 18, 15],
+    'За неделю': [42, 35, 28],
+    'За месяц': [120, 90, 75],
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +39,12 @@ class _ChartsScreenState extends State<ChartsScreen> {
             const SizedBox(height: 10),
             Row(
               children: [
-                const SizedBox(width: 10),
-                // Общий график
                 _buildMainChartBlock(),
                 const SizedBox(width: 10),
-                // Статистика
                 _buildStatisticsBlock(),
               ],
             ),
             const SizedBox(height: 15),
-            // График заданного значения
             _buildCustomValueChart(),
           ],
         ),
@@ -58,74 +60,76 @@ class _ChartsScreenState extends State<ChartsScreen> {
       child: Column(
         children: [
           const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(width: 10),
-              const Text(
-                'Общий график',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2,
-                ),
-              ),
-              const Spacer(),
-              const input_date_interval_widget(),
-              const SizedBox(width: 10),
-            ],
-          ),
-          Row(
-            children: [
-              Container(
-                width: 600,
-                height: 200,
-                child: LineChartWidget(),
-              ),
-              const SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Выпадающий список групп датчиков
-                  DropdownButton<String>(
-                    borderRadius: BorderRadius.circular(8),
-                    value: selectedSensorGroup,
-                    items: const [
-                      'Tn_K_m',
-                      'Tn_L_m',
-                      'Tn_R_m',
-                      'Tn_Up_m',
-                      'T_n'
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedSensorGroup = newValue!;
-                      });
-                    },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                const Text(
+                  'Общий график',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
-                  // Динамическое отображение датчиков
-                  if (selectedSensorGroup == 'T_n')
-                    _buildSensorRow(
-                      color: Colors.blue,
-                      text: 'T1 д. температуры',
-                    )
-                  else
-                    Column(
-                      children: List.generate(3, (index) => 
-                        _buildSensorRow(
-                          color: sensorColors[index],
-                          text: _getSensorText(selectedSensorGroup, index + 1),
+                ),
+                const Spacer(),
+                const input_date_interval_widget(),
+                const SizedBox(width: 10),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              children: [
+                Container(
+                  width: 600,
+                  height: 200,
+                  child: LineChartWidget(),
+                ),
+                const SizedBox(width: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DropdownButton<String>(
+                      borderRadius: BorderRadius.circular(8),
+                      value: selectedSensorGroup,
+                      items: const [
+                        'Tn_K_m',
+                        'Tn_L_m',
+                        'Tn_R_m',
+                        'Tn_Up_m',
+                        'T_n',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedSensorGroup = newValue!;
+                        });
+                      },
+                    ),
+                    if (selectedSensorGroup == 'T_n')
+                      _buildSensorRow(
+                        color: Colors.blue,
+                        text: 'T1 д. температуры',
+                      )
+                    else
+                      Column(
+                        children: List.generate(
+                          3,
+                          (index) => _buildSensorRow(
+                            color: sensorColors[index],
+                            text: _getSensorText(selectedSensorGroup, index + 1),
+                          ),
                         ),
-                    )),
-                ],
-              ),
-            ],
+                      ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -140,113 +144,123 @@ class _ChartsScreenState extends State<ChartsScreen> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
-  children: [
-    Row(
-      children: [
-        const SizedBox(width: 10),
-        const Text(
-          'Статистика',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 2,
-          ),
-        ),
-        const Spacer(),
-        DropdownButton<String>(
-          borderRadius: BorderRadius.circular(8),
-          value: "За час",
-          items: const ['За час', 'За сутки', 'За неделю', 'За месяц']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (_) {},
-        ),
-      ],
-    ),
-    const SizedBox(height: 5),
-    SizedBox(
-      height: 220,
-      width: 400,
-      child: BarChart(
-        BarChartData(
-          borderData: FlBorderData(
-            border: const Border(
-              top: BorderSide.none,
-              right: BorderSide.none,
-              left: BorderSide(width: 1),
-              bottom: BorderSide(width: 1),
+          children: [
+            Row(
+              children: [
+                const SizedBox(width: 10),
+                const Text(
+                  'Статистика',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2,
+                  ),
+                ),
+                const Spacer(),
+                DropdownButton<String>(
+                  borderRadius: BorderRadius.circular(8),
+                  value: selectedTimeInterval,
+                  items: const ['За час', 'За сутки', 'За неделю', 'За месяц']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (value) => setState(() {
+                    selectedTimeInterval = value!;
+                  }),
+                ),
+              ],
             ),
-          ),
-          groupsSpace: 10,
-          titlesData: FlTitlesData(
-            show: true,
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                getTitlesWidget: (value, meta) {
-                  final index = value.toInt() - 1;
-                  final sensorType = selectedSensorGroup.split('_')[1];
-                  final titles = {
-                    'K': ['K_1', 'K_2', 'K_3'],
-                    'L': ['L_1', 'L_2', 'L_3'],
-                    'R': ['R_1', 'R_2', 'R_3'],
-                    'Up': ['Up_1', 'Up_2', 'Up_3'],
-                    'n': ['T1']
-                  };
-                  
-                  if (index >= 0 && index < 3 && selectedSensorGroup != 'T_n') {
-                    return Text('T1_${titles[sensorType]?[index]}');
-                  }
-                  if (selectedSensorGroup == 'T_n' && index == 0) {
-                    return const Text('T1');
-                  }
-                  return const Text('');
-                },
-                reservedSize: 40,
-              ),
-            ),
-            leftTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: true),
-            ),
-            topTitles: const AxisTitles(),
-            rightTitles: const AxisTitles(),
-          ),
-          barGroups: selectedSensorGroup == 'T_n'
-              ? [
-                  BarChartGroupData(x: 1, barRods: [
-                    BarChartRodData(
-                      toY: 10,
-                      width: 15,
-                      color: Colors.blue,
+            const SizedBox(height: 5),
+            SizedBox(
+              height: 220,
+              width: 400,
+              child: BarChart(
+                BarChartData(
+                  borderData: FlBorderData(
+                    border: const Border(
+                      top: BorderSide.none,
+                      right: BorderSide.none,
+                      left: BorderSide(width: 1),
+                      bottom: BorderSide(width: 1),
                     ),
-                  ])
-                ]
-              : List.generate(3, (index) => BarChartGroupData(
-                    x: index + 1,
-                    barRods: [
-                      BarChartRodData(
-                        toY: [10, 9, 4][index].toDouble(),
-                        width: 15,
-                        color: const [
-                          Color(0xffA700FF),
-                          Color(0xffEF4444),
-                          Color(0xff3CD856),
-                        ][index],
-                      )
-                    ],
-                  )),
+                  ),
+                  groupsSpace: 10,
+                  titlesData: FlTitlesData(
+                    show: true,
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: (value, meta) {
+                          final index = value.toInt() - 1;
+                          final sensorType = selectedSensorGroup.split('_')[1];
+                          final titles = {
+                            'K': ['K_1', 'K_2', 'K_3'],
+                            'L': ['L_1', 'L_2', 'L_3'],
+                            'R': ['R_1', 'R_2', 'R_3'],
+                            'Up': ['Up_1', 'Up_2', 'Up_3'],
+                            'n': ['T1']
+                          };
+                          
+                          if (index >= 0 && index < 3 && selectedSensorGroup != 'T_n') {
+                            return Text('T1_${titles[sensorType]?[index]}');
+                          }
+                          if (selectedSensorGroup == 'T_n' && index == 0) {
+                            return const Text('T1');
+                          }
+                          return const Text('');
+                        },
+                        reservedSize: 40,
+                      ),
+                    ),
+                    leftTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: true),
+                    ),
+                    topTitles: const AxisTitles(),
+                    rightTitles: const AxisTitles(),
+                  ),
+                  barGroups: _generateBarGroups(),
+                ),
+              ),
+            )
+          ],
         ),
-      ),
-    )
-  ],
-),
       ),
     );
+  }
+
+  List<BarChartGroupData> _generateBarGroups() {
+    final data = timeIntervalData[selectedTimeInterval]!;
+    
+    if (selectedSensorGroup == 'T_n') {
+      return [
+        BarChartGroupData(x: 1, barRods: [
+          BarChartRodData(
+            toY: data[0],
+            width: 15,
+            color: Colors.blue,
+          ),
+        ])
+      ];
+    }
+    
+    return List.generate(3, (index) => BarChartGroupData(
+      x: index + 1,
+      barRods: [
+        BarChartRodData(
+          toY: data[index],
+          width: 15,
+          color: const [
+            Color(0xffA700FF),
+            Color(0xffEF4444),
+            Color(0xff3CD856),
+          ][index],
+        )
+      ],
+    ));
   }
 
   Widget _buildCustomValueChart() {
@@ -309,7 +323,6 @@ class _ChartsScreenState extends State<ChartsScreen> {
     );
   }
 
-  // Вспомогательные методы
   BoxDecoration _blockDecoration() {
     return BoxDecoration(
       color: Colors.white,
