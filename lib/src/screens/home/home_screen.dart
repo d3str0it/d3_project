@@ -7,7 +7,7 @@ import 'package:it4gaz/src/screens/visualization/visualization_screen.dart';
 import 'package:it4gaz/src/widgets/build_card_widget.dart'; 
 import 'package:it4gaz/src/widgets/warning_widgets.dart'; 
 import 'package:it4gaz/src/widgets/graph_card_widgets.dart';
-import 'package:fl_chart/fl_chart.dart'; // Импортируем fl_chart
+import 'package:fl_chart/fl_chart.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
