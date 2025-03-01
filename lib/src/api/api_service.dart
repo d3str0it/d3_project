@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:it4gaz/src/api/data/requests/sensor_request_model.dart';
 import 'package:it4gaz/src/api/data/responces/analyze_responce.dart';
