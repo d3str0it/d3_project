@@ -40,7 +40,7 @@ abstract class RestClient {
   @POST('/data/analyze')
   @MultiPart()
   Future<AnalyzeResponce> analyze({
-    @Part() required MultipartFile file,
+    @Part() required File file,
   });
 
   @POST('/analyze/sensor/T1')

@@ -30,13 +30,7 @@ class LoadDataController extends Cubit<LoadDataState> {
     emit(LoadDataState.loading());
 
     try {
-      // Пример использования:
-final file = File('path/to/file');
-final multipartFile = await MultipartFile.fromFile(
-  file.path,
-  filename: file.path.split('/').last,
-      );
-      final response = await restClient.analyze(file: multipartFile);
+      final response = await restClient.analyze(file: file);
       emit(LoadDataState.analyze(response.status));
     } catch (e) {
       emit(LoadDataState.error(e.toString()));
