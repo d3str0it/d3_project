@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:it4gaz/src/api/api_service.dart';
@@ -30,13 +29,7 @@ class LoadDataController extends Cubit<LoadDataState> {
     emit(LoadDataState.loading());
 
     try {
-      // Пример использования:
-final file = File('path/to/file');
-final multipartFile = await MultipartFile.fromFile(
-  file.path,
-  filename: file.path.split('/').last,
-      );
-      final response = await restClient.analyze(file: multipartFile);
+      final response = await restClient.analyze(file: file);
       emit(LoadDataState.analyze(response.status));
     } catch (e) {
       emit(LoadDataState.error(e.toString()));
