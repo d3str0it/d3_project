@@ -41,7 +41,7 @@ class _SensorSummaryCardState extends State<SensorSummaryCard> {
           return AlertDialog(
             title: const Text('Выберите датчики'),
             content: SizedBox(
-              width: 300, // Фиксированная ширина окна (можно настроить)
+              width: 300, 
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -91,7 +91,7 @@ class _SensorSummaryCardState extends State<SensorSummaryCard> {
             },
           ),
           Expanded(
-            child: Text(sensor), // Используем полное название датчика
+            child: Text(sensor), 
           ),
         ],
       ),
@@ -122,7 +122,7 @@ class _SensorSummaryCardState extends State<SensorSummaryCard> {
       onTap: () => _showSensorSelector(context),
       behavior: HitTestBehavior.translucent,
       child: Container(
-        width: 80, // фиксированная ширина кнопки
+        width: 80, 
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),

@@ -14,7 +14,8 @@ class ChartsScreen extends StatefulWidget {
 class _ChartsScreenState extends State<ChartsScreen> {
   String selectedSensorGroup = 'Tn_K_m';
   String selectedTimeInterval = 'За час';
-  
+  String selectedCustomValue = 'T1_K_1 д. кольц. деф.';
+
   final List<Color> sensorColors = const [
     Color(0xffA700FF),
     Color(0xffEF4444),
@@ -72,7 +73,7 @@ class _ChartsScreenState extends State<ChartsScreen> {
                   ),
                 ),
                 const Spacer(),
-                const input_date_interval_widget(),
+                const InputDateIntervalWidget(),
                 const SizedBox(width: 10),
               ],
             ),
@@ -122,7 +123,8 @@ class _ChartsScreenState extends State<ChartsScreen> {
                           3,
                           (index) => _buildSensorRow(
                             color: sensorColors[index],
-                            text: _getSensorText(selectedSensorGroup, index + 1),
+                            text:
+                                _getSensorText(selectedSensorGroup, index + 1),
                           ),
                         ),
                       ),
@@ -204,8 +206,10 @@ class _ChartsScreenState extends State<ChartsScreen> {
                             'Up': ['Up_1', 'Up_2', 'Up_3'],
                             'n': ['T1']
                           };
-                          
-                          if (index >= 0 && index < 3 && selectedSensorGroup != 'T_n') {
+
+                          if (index >= 0 &&
+                              index < 3 &&
+                              selectedSensorGroup != 'T_n') {
                             return Text('T1_${titles[sensorType]?[index]}');
                           }
                           if (selectedSensorGroup == 'T_n' && index == 0) {
@@ -234,7 +238,7 @@ class _ChartsScreenState extends State<ChartsScreen> {
 
   List<BarChartGroupData> _generateBarGroups() {
     final data = timeIntervalData[selectedTimeInterval]!;
-    
+
     if (selectedSensorGroup == 'T_n') {
       return [
         BarChartGroupData(x: 1, barRods: [
@@ -246,21 +250,23 @@ class _ChartsScreenState extends State<ChartsScreen> {
         ])
       ];
     }
-    
-    return List.generate(3, (index) => BarChartGroupData(
-      x: index + 1,
-      barRods: [
-        BarChartRodData(
-          toY: data[index],
-          width: 15,
-          color: const [
-            Color(0xffA700FF),
-            Color(0xffEF4444),
-            Color(0xff3CD856),
-          ][index],
-        )
-      ],
-    ));
+
+    return List.generate(
+        3,
+        (index) => BarChartGroupData(
+              x: index + 1,
+              barRods: [
+                BarChartRodData(
+                  toY: data[index],
+                  width: 15,
+                  color: const [
+                    Color(0xffA700FF),
+                    Color(0xffEF4444),
+                    Color(0xff3CD856),
+                  ][index],
+                )
+              ],
+            ));
   }
 
   Widget _buildCustomValueChart() {
@@ -288,7 +294,7 @@ class _ChartsScreenState extends State<ChartsScreen> {
                 const Spacer(),
                 DropdownButton<String>(
                   borderRadius: BorderRadius.circular(8),
-                  value: "T1_K_1 д. кольц. деф.",
+                  value: selectedCustomValue,
                   items: const [
                     'T1_K_1 д. кольц. деф.',
                     'T1_K_2 д. кольц. деф.',
@@ -309,14 +315,22 @@ class _ChartsScreenState extends State<ChartsScreen> {
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: (_) {},
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedCustomValue = newValue!;
+                    });
+                  },
                 ),
                 const SizedBox(width: 25),
-                const input_date_interval_widget(),
+                const InputDateIntervalWidget(),
                 const SizedBox(width: 10),
               ],
             ),
-            const SizedBox(height: 250, child: CustomLineChart())
+            const SizedBox(height: 250, child: CustomLineChart(
+  mainDataPoints: const [FlSpot(0, 3), FlSpot(2.6, 2), FlSpot(4.9, 5), FlSpot(6.8, 3.1), FlSpot(8, 4), FlSpot(9.5, 3), FlSpot(11, 4)],  // Replace 'yourDataHere' with the actual data
+  avgDataPoints: const [FlSpot(0, 3.44), FlSpot(2.6, 3.44), FlSpot(4.9, 3.44), FlSpot(6.8, 3.44), FlSpot(8, 3.44), FlSpot(9.5, 3.44), FlSpot(11, 3.44)],
+)
+)
           ],
         ),
       ),
@@ -365,7 +379,7 @@ class _ChartsScreenState extends State<ChartsScreen> {
       'Up' => 'верх. обр.',
       _ => '',
     };
-    
+
     return 'T1_${sensorType}_$sensorNumber д. $typeDescription';
   }
 }

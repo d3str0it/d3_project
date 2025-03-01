@@ -121,9 +121,9 @@ class _LineChart extends StatelessWidget {
       );
 
   List<LineChartBarData> lineBarsData() => [
-        lineChartBarData1(), // Фиолетовая линия
-        lineChartBarData2(), // Красная линия
-        lineChartBarData3(), // Зеленая линия
+        lineChartBarData1(), 
+        lineChartBarData2(), 
+        lineChartBarData3(), 
       ];
 
   LineChartBarData lineChartBarData1() => LineChartBarData(

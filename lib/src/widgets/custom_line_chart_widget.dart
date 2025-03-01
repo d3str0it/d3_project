@@ -185,7 +185,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
       maxX: 11,
       minY: 0,
       maxY: 6,
-      lineBarsData: [ // Изменено с lineBarsData на lineBars
+      lineBarsData: [ 
         LineChartBarData(
           spots: widget.mainDataPoints,
           isCurved: true,
@@ -262,7 +262,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
       maxX: 11,
       minY: 0,
       maxY: 6,
-      lineBarsData: [ // Изменено с lineBarsData на lineBars
+      lineBarsData: [ 
         LineChartBarData(
           spots: widget.avgDataPoints,
           isCurved: true,

@@ -19,6 +19,7 @@ dependencies:
   fl_chart: ^0.70.2
   masked_text: ^1.1.2
   intl: ^0.18.1
+  vph_web_date_picker: ^0.0.6
 
 dev_dependencies:
   flutter_test:
