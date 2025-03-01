@@ -1,7 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:it4gaz/gen/assets.gen.dart';
+import 'package:it4gaz/src/api/api_service.dart';
+import 'package:it4gaz/src/api/data/requests/filter_model.dart';
+import 'package:it4gaz/src/api/data/requests/sensor_request_model.dart';
+import 'package:it4gaz/src/controllers/load_data_controller.dart';
 import 'package:it4gaz/src/core/di/service_locator.dart';
 import 'package:it4gaz/src/screens/analytics/analytics_screen.dart';
 import 'package:it4gaz/src/screens/charts/charts_screen.dart';
@@ -11,13 +16,14 @@ import 'package:it4gaz/src/screens/visualization/visualization_screen.dart';
 import 'package:it4gaz/src/services/bloc_observer.dart';
 import 'package:it4gaz/src/services/navigation_service.dart';
 import 'package:it4gaz/src/widgets/navigation_button_widget.dart';
+import 'package:retrofit/retrofit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  Bloc.observer = MainBlocObserver();
-  
   await setupLocator();
+
+  Bloc.observer = MainBlocObserver();
+
 
   runApp(const MyApp());
 }
@@ -32,9 +38,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      
       providers: [
         BlocProvider(create: (context) => NavigationService()),
+        BlocProvider(create: (context) => LoadDataController()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
