@@ -160,80 +160,73 @@ class _NotificationListState extends State<NotificationList> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 40, top: 22, right: 80),
-          child: Container(
-            width: 450,
-            height: 900,
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromARGB(48, 0, 0, 0),
+            blurRadius: 8,
+            spreadRadius: 1,
+            offset: const Offset(1, 0),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: 500,
+            height: 50,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color.fromARGB(48, 0, 0, 0),
-                  blurRadius: 8,
-                  spreadRadius: 1,
-                  offset: const Offset(1, 0),
-                ),
-              ],
+              color: const Color.fromARGB(255, 233, 226, 226),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
             ),
-            child: Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 500,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 233, 226, 226),
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: const Text(
-                          'Уведомления',
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: _clearNotifications,
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.grey[800],
-                        ),
-                        child: const Text('Очистить'),
-                      ),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: const Text(
+                    'Уведомления',
+                    style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(8.0),
-                    child: notifications.isEmpty
-                        ? Center(
-                            child: Text(
-                              'Список уведомлений пуст',
-                              style: TextStyle(color: Colors.grey[600], fontSize: 16),
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: notifications.length,
-                            itemBuilder: (context, index) {
-                              return NotificationCard(
-                                notification: notifications[index],
-                                onClose: () => _removeNotification(index),
-                              );
-                            },
-                          ),
+                TextButton(
+                  onPressed: _clearNotifications,
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.grey[800],
                   ),
+                  child: const Text('Очистить'),
                 ),
               ],
             ),
           ),
-        ),
-      ],
+          Expanded(
+            child: Container(
+              color: Colors.white,
+              padding: const EdgeInsets.all(8.0),
+              child: notifications.isEmpty
+                  ? Center(
+                      child: Text(
+                        'Список уведомлений пуст',
+                        style: TextStyle(color: Colors.grey[600], fontSize: 16),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: notifications.length,
+                      itemBuilder: (context, index) {
+                        return NotificationCard(
+                          notification: notifications[index],
+                          onClose: () => _removeNotification(index),
+                        );
+                      },
+                    ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 } 

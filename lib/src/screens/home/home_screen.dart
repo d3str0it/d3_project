@@ -1,14 +1,15 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:it4gaz/gen/assets.gen.dart';
 import 'package:it4gaz/src/screens/analytics/analytics_screen.dart';
 import 'package:it4gaz/src/screens/charts/charts_screen.dart';
 import 'package:it4gaz/src/screens/tables/tables_screen.dart';
 import 'package:it4gaz/src/screens/visualization/visualization_screen.dart';
-import 'package:it4gaz/src/widgets/build_card_widget.dart'; 
-import 'package:it4gaz/src/widgets/warning_widgets.dart'; 
+import 'package:it4gaz/src/widgets/build_card_widget.dart';
+import 'package:it4gaz/src/widgets/warning_widgets.dart';
 import 'package:it4gaz/src/widgets/graph_card_widgets.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -20,16 +21,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String? selectedDate; 
-  List<FlSpot> graphData = []; 
-  String lowPercentage = "16%"; 
-  String mediumPercentage = "32%"; 
-  String highPercentage = "64%"; 
+  String? selectedDate;
+  List<FlSpot> graphData = [];
+  String lowPercentage = "16%";
+  String mediumPercentage = "32%";
+  String highPercentage = "64%";
 
   @override
   void initState() {
     super.initState();
-    
+
     selectedDate = 'За час';
     _updateData(selectedDate!);
   }
@@ -112,159 +113,182 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final assetsIcons = $AssetsIconsGen();
-    
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Главная'),
-        backgroundColor: const Color.fromARGB(0, 255, 255, 255),
-      ),
-      body: Row(
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                Row(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Flexible(
+                flex: 7,
+                child: Column(
                   children: [
-                    CardWidget(
-                      iconPath: assetsIcons.tabIcon.path,
-                      title: 'Таблица',
-                      description: 'Отображение данных в табличном виде. Просмотр минимальных и максимальных значений. Выделение уровней деформаций',
-                      navigateTo: const TablesScreen(),
-                    ),
-                    CardWidget(
-                      iconPath: assetsIcons.diogIcon.path,
-                      title: 'Аналитика',
-                      description: 'Вывод статистики, графиков и диаграмм для заданных значений и периода времени.',
-                      navigateTo: const AnalyticsScreen(),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    CardWidget(
-                      iconPath: assetsIcons.graphIcon.path,
-                      title: 'Графики',
-                      description: 'Отображение данных в виде графиков с настраиваемыми диапазонами отображения.',
-                      navigateTo: const ChartsScreen(),
-                    ),
-                    CardWidget(
-                      iconPath: assetsIcons.boxIcon.path,
-                      title: 'Визуализация',
-                      description: 'Возможность наглядно увидеть 3D-модель трубы и тепловую карту деформаций.',
-                      navigateTo: const VisualizationScreen(),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 5),
-                  child: Container(
-                    width: 980,
-                    height: 300,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color.fromARGB(48, 0, 0, 0),
-                          blurRadius: 8,
-                          spreadRadius: 1,
-                          offset: const Offset(1, 0),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Уровни деформации',
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: DropdownButton<String>(
-                                  hint: Text(selectedDate ?? 'Выберите период', style: TextStyle(color: Colors.grey)), 
-                                  value: selectedDate,
-                                  items: const ['За час', 'За день', 'За неделю', 'За месяц']
-                                      .map<DropdownMenuItem<String>>((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value, style: TextStyle(color: const Color.fromARGB(255, 53, 53, 53))), 
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      selectedDate = newValue; 
-                                      _updateData(newValue!); 
-                                    });
-                                  },
-                                  dropdownColor: Colors.white, 
-                                  iconEnabledColor: Colors.grey, 
-                                ),
-                              ),
-                            ],
+                    Flexible(
+                      flex: 2,
+                      child: GridView(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 309 / 170,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 12),
+                        shrinkWrap: true,
+                        children: [
+                          CardWidget(
+                            icon: Icon(CupertinoIcons.table),
+                            title: 'Таблица',
+                            description:
+                                'Отображение данных в табличном виде. Просмотр минимальных и максимальных значений. Выделение уровней деформаций',
+                            navigateTo: const TablesScreen(),
                           ),
+                          CardWidget(
+                            icon: Icon(CupertinoIcons.chart_pie),
+                            title: 'Аналитика',
+                            description:
+                                'Вывод статистики, графиков и диаграмм для заданных значений и периода времени.',
+                            navigateTo: const AnalyticsScreen(),
+                          ),
+                          CardWidget(
+                            icon: Icon(CupertinoIcons.chart_bar_square),
+                            title: 'Графики',
+                            description:
+                                'Отображение данных в виде графиков с настраиваемыми диапазонами отображения.',
+                            navigateTo: const ChartsScreen(),
+                          ),
+                          CardWidget(
+                            icon: Icon(CupertinoIcons.view_3d),
+                            title: 'Визуализация',
+                            description:
+                                'Возможность наглядно увидеть 3D-модель трубы и тепловую карту деформаций.',
+                            navigateTo: const VisualizationScreen(),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color.fromARGB(48, 0, 0, 0),
+                              blurRadius: 8,
+                              spreadRadius: 1,
+                              offset: const Offset(1, 0),
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        Row( 
+                        child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 100, top: 5),
+                              padding: const EdgeInsets.all(16.0),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                 
-                                  Graph_card(
-                                    circleColor: Colors.green,
-                                    label: "Низкий",
-                                    blockColor: const Color.fromARGB(255, 255, 255, 255),
-                                    percentage: lowPercentage, 
-                                    graphColor: Colors.green,
-                                    selectedDate: selectedDate,
-                                    graphData: graphData,
+                                  Text(
+                                    'Уровни деформации',
+                                    style: TextStyle(
+                                        fontSize: 20, fontWeight: FontWeight.bold),
                                   ),
-                                  SizedBox(width: 20), 
-                                  
-                                  Graph_card(
-                                    circleColor: Colors.blue,
-                                    label: "Средний",
-                                    blockColor: const Color.fromARGB(255, 255, 255, 255),
-                                    percentage: mediumPercentage, 
-                                    graphColor: Colors.blue, 
-                                    selectedDate: selectedDate,
-                                    graphData: graphData,
-                                  ),
-                                  SizedBox(width: 20), 
-                                  
-                                  Graph_card(
-                                    circleColor: Colors.red,
-                                    label: "Высокий",
-                                    blockColor: const Color.fromARGB(255, 255, 255, 255),
-                                    percentage: highPercentage,
-                                    graphColor: Colors.red, 
-                                    selectedDate: selectedDate,
-                                    graphData: graphData,
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 20),
+                                    child: DropdownButton<String>(
+                                      hint: Text(selectedDate ?? 'Выберите период',
+                                          style: TextStyle(color: Colors.grey)),
+                                      value: selectedDate,
+                                      items: const [
+                                        'За час',
+                                        'За день',
+                                        'За неделю',
+                                        'За месяц'
+                                      ].map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value,
+                                              style: TextStyle(
+                                                  color: const Color.fromARGB(
+                                                      255, 53, 53, 53))),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          selectedDate = newValue;
+                                          _updateData(newValue!);
+                                        });
+                                      },
+                                      dropdownColor: Colors.white,
+                                      iconEnabledColor: Colors.grey,
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 100, top: 5),
+                                  child: Row(
+                                    children: [
+                                      Graph_card(
+                                        circleColor: Colors.green,
+                                        label: "Низкий",
+                                        blockColor: const Color.fromARGB(
+                                            255, 255, 255, 255),
+                                        percentage: lowPercentage,
+                                        graphColor: Colors.green,
+                                        selectedDate: selectedDate,
+                                        graphData: graphData,
+                                      ),
+                                      SizedBox(width: 20),
+                                      Graph_card(
+                                        circleColor: Colors.blue,
+                                        label: "Средний",
+                                        blockColor: const Color.fromARGB(
+                                            255, 255, 255, 255),
+                                        percentage: mediumPercentage,
+                                        graphColor: Colors.blue,
+                                        selectedDate: selectedDate,
+                                        graphData: graphData,
+                                      ),
+                                      SizedBox(width: 20),
+                                      Graph_card(
+                                        circleColor: Colors.red,
+                                        label: "Высокий",
+                                        blockColor: const Color.fromARGB(
+                                            255, 255, 255, 255),
+                                        percentage: highPercentage,
+                                        graphColor: Colors.red,
+                                        selectedDate: selectedDate,
+                                        graphData: graphData,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          Column(
-            children: [
-              NotificationList(), 
+              ),
+              const SizedBox(width: 12),
+              Flexible(
+                flex: 3,
+                child: NotificationList()),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
