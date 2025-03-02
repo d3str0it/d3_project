@@ -1,6 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:it4gaz/src/services/navigation_service.dart';
 import 'package:it4gaz/src/widgets/navigation_button_widget.dart';
+import 'package:pressable/pressable.dart';
 
 class CardWidget extends StatelessWidget {
   final Widget icon;
@@ -9,12 +13,12 @@ class CardWidget extends StatelessWidget {
   final Widget navigateTo;
 
   const CardWidget({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.description,
     required this.navigateTo,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,50 +40,55 @@ class CardWidget extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              icon,
-              const SizedBox(width: 8),
+              Row(
+                children: [
+                  Flexible(flex: 1, child: icon),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    flex: 8,
+                    child: AutoSizeText(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 1,
+                      minFontSize: 14,
+                      maxFontSize: 26,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(thickness: 1, color: Colors.grey),
               AutoSizeText(
-                title,
+                description,
                 style: const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.grey,
                 ),
-                maxLines: 1,
-                minFontSize: 14,
-                maxFontSize: 26,
+                maxLines: 3,
+                minFontSize: 12,
+                maxFontSize: 18,
               ),
             ],
           ),
-          const Divider(thickness: 1, color: Colors.grey),
-          AutoSizeText(
-            description,
-            style: const TextStyle(
-              fontSize: 18,
-              color: Colors.grey,
-            ),
-            maxLines: 3,
-            minFontSize: 12,
-            maxFontSize: 18,
-          ),
-          Expanded( 
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end, 
+          Pressable.scale(
+            onPressed: () =>
+                context.read<NavigationService>().navigateTo(navigateTo),
+            child: Row(
               children: [
-                Align(
-                  alignment: Alignment.bottomRight, 
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 10, bottom: 10), 
-                    child: NavigationButtonWidget(
-                      navigateTo: navigateTo,
-                      label: 'Перейти',
-                      icon: Icons.arrow_forward,
-                      isSelected: false,
-                    ),
-                  ),
+                Text(
+                  'Перейти',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
+                const SizedBox(width: 8),
+                Icon(Icons.arrow_forward),
               ],
             ),
           ),

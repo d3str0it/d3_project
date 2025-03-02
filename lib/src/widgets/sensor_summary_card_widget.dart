@@ -47,7 +47,7 @@ class _SensorSummaryCardState extends State<SensorSummaryCard> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     _buildCheckboxItem('все', setDialogState),
-                    ...allSensors.map((sensor) => _buildCheckboxItem(sensor, setDialogState)).toList(),
+                    ...allSensors.map((sensor) => _buildCheckboxItem(sensor, setDialogState)),
                   ],
                 ),
               ),

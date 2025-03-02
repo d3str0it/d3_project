@@ -19,10 +19,10 @@ class NotificationCard extends StatelessWidget {
   final VoidCallback onClose;
 
   const NotificationCard({
-    Key? key,
+    super.key,
     required this.notification,
     required this.onClose,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +125,8 @@ class NotificationCard extends StatelessWidget {
 }
 
 class NotificationList extends StatefulWidget {
+  const NotificationList({super.key});
+
   @override
   _NotificationListState createState() => _NotificationListState();
 }

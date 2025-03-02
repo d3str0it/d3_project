@@ -80,7 +80,7 @@ class _ChartsScreenState extends State<ChartsScreen> {
           Expanded(
             child: Row(
               children: [
-                Container(
+                SizedBox(
                   width: 600,
                   height: 200,
                   child: LineChartWidget(),

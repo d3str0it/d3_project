@@ -11,7 +11,7 @@ class Graph_card extends StatelessWidget {
   final List<FlSpot> graphData; 
 
   const Graph_card({
-    Key? key,
+    super.key,
     required this.circleColor,
     required this.label,
     required this.blockColor,
@@ -19,7 +19,7 @@ class Graph_card extends StatelessWidget {
     required this.graphColor, 
     this.selectedDate, 
     required this.graphData, 
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

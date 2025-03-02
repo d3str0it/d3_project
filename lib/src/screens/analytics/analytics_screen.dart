@@ -33,9 +33,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 const input_date_interval_widget(),
                 const SizedBox(width: 10),
                 CupertinoButton(
-                  child: const Text('Применить'),
                   color: const Color(0xffDECCFE),
                   onPressed: () {},
+                  child: const Text('Применить'),
                 ),
               ],
             ),

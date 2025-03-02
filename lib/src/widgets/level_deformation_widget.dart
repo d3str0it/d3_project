@@ -12,7 +12,7 @@ class LevelDeformationCard extends StatelessWidget {
 
   // Конструктор
   const LevelDeformationCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.circleColor,
     required this.value,
@@ -20,7 +20,7 @@ class LevelDeformationCard extends StatelessWidget {
     required this.arrowColor,
     required this.percentage,
     required this.description,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

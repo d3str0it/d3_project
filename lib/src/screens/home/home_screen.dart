@@ -1,9 +1,6 @@
-import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:it4gaz/gen/assets.gen.dart';
 import 'package:it4gaz/src/screens/analytics/analytics_screen.dart';
 import 'package:it4gaz/src/screens/charts/charts_screen.dart';
 import 'package:it4gaz/src/screens/tables/tables_screen.dart';
