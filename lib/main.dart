@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +21,6 @@ void main() async {
   await setupLocator();
 
   Bloc.observer = MainBlocObserver();
-
 
   runApp(const MyApp());
 }
@@ -78,51 +80,82 @@ class MainScreen extends StatelessWidget {
                         Assets.logo.it4gazLogo.image(width: 100, height: 100),
                   ),
                   const SizedBox(height: 35),
-                  Column(
-                    children: [
-                      NavigationButtonWidget(
-                        navigateTo: const HomeScreen(),
-                        label: 'Главная',
-                        icon: CupertinoIcons.house,
-                        isSelected: state.isNotEmpty
-                            ? state.last.runtimeType == HomeScreen
-                            : false,
-                      ),
-                      NavigationButtonWidget(
-                        navigateTo: const TablesScreen(),
-                        label: 'Таблица',
-                        icon: CupertinoIcons.table,
-                        isSelected: state.isNotEmpty
-                            ? state.last.runtimeType == TablesScreen
-                            : false,
-                      ),
-                      NavigationButtonWidget(
-                        navigateTo: const ChartsScreen(),
-                        label: 'Графики',
-                        icon: CupertinoIcons.chart_bar_square,
-                        isSelected: state.isNotEmpty
-                            ? state.last.runtimeType == ChartsScreen
-                            : false,
-                      ),
-                      NavigationButtonWidget(
-                        navigateTo: const AnalyticsScreen(),
-                        label: 'Аналитика',
-                        icon: CupertinoIcons.chart_pie,
-                        isSelected: state.isNotEmpty
-                            ? state.last.runtimeType == AnalyticsScreen
-                            : false,
-                      ),
-                      NavigationButtonWidget(
-                        navigateTo: const VisualizationScreen(),
-                        label: 'Визуализация',
-                        icon: CupertinoIcons
-                            .rectangle_arrow_up_right_arrow_down_left,
-                        isSelected: state.isNotEmpty
-                            ? state.last.runtimeType == VisualizationScreen
-                            : false,
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              NavigationButtonWidget(
+                                navigateTo: const HomeScreen(),
+                                label: 'Главная',
+                                icon: CupertinoIcons.house,
+                                isSelected: state.isNotEmpty
+                                    ? state.last.runtimeType == HomeScreen
+                                    : false,
+                              ),
+                              NavigationButtonWidget(
+                                navigateTo: const TablesScreen(),
+                                label: 'Таблица',
+                                icon: CupertinoIcons.table,
+                                isSelected: state.isNotEmpty
+                                    ? state.last.runtimeType == TablesScreen
+                                    : false,
+                              ),
+                              NavigationButtonWidget(
+                                navigateTo: const ChartsScreen(),
+                                label: 'Графики',
+                                icon: CupertinoIcons.chart_bar_square,
+                                isSelected: state.isNotEmpty
+                                    ? state.last.runtimeType == ChartsScreen
+                                    : false,
+                              ),
+                              NavigationButtonWidget(
+                                navigateTo: const AnalyticsScreen(),
+                                label: 'Аналитика',
+                                icon: CupertinoIcons.chart_pie,
+                                isSelected: state.isNotEmpty
+                                    ? state.last.runtimeType == AnalyticsScreen
+                                    : false,
+                              ),
+                              NavigationButtonWidget(
+                                navigateTo: const VisualizationScreen(),
+                                label: 'Визуализация',
+                                icon: CupertinoIcons
+                                    .rectangle_arrow_up_right_arrow_down_left,
+                                isSelected: state.isNotEmpty
+                                    ? state.last.runtimeType ==
+                                        VisualizationScreen
+                                    : false,
+                              ),
+                            ],
+                          ),
+                        ),
+                        CupertinoButton(
+                          color: const Color(0xffDECCFE),
+                          onPressed: () async {
+                            FilePickerResult? result =
+                                await FilePicker.platform.pickFiles();
+
+                            if (result != null) {
+                              File file = File(result.files.single.path!);
+                              if (context.mounted) {
+                                context
+                                    .read<LoadDataController>()
+                                    .analyze(file);
+                              }
+                            } else {
+                              // User canceled the picker
+                            }
+                          },
+                          child: const Text('Импортировать данные'),
+                        ),
+                      ],
+                    ),
                   ),
+                  const SizedBox(height: 35),
                 ],
               ),
             ),
