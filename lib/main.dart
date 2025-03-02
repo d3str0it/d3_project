@@ -127,24 +127,21 @@ class MainScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color.fromARGB(48, 0, 0, 0),
-                        blurRadius: 8.0,
-                        spreadRadius: 1.0,
-                        offset: const Offset(1, 0),
-                      ),
-                    ],
-                  ),
-                  child:
-                      state.isNotEmpty ? state.last : const SizedBox.shrink(),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color.fromARGB(48, 0, 0, 0),
+                      blurRadius: 8.0,
+                      spreadRadius: 1.0,
+                      offset: const Offset(1, 0),
+                    ),
+                  ],
                 ),
+                child:
+                    state.isNotEmpty ? state.last : const SizedBox.shrink(),
               ),
             ),
           ],
