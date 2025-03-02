@@ -22,7 +22,7 @@ mixin _$LoadDataState {
     required TResult Function(File file) openFile,
     required TResult Function() loading,
     required TResult Function() loaded,
-    required TResult Function(String status) analyze,
+    required TResult Function(AnalyzeResponse analyzeResponse) analyze,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -32,7 +32,7 @@ mixin _$LoadDataState {
     TResult? Function(File file)? openFile,
     TResult? Function()? loading,
     TResult? Function()? loaded,
-    TResult? Function(String status)? analyze,
+    TResult? Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ mixin _$LoadDataState {
     TResult Function(File file)? openFile,
     TResult Function()? loading,
     TResult Function()? loaded,
-    TResult Function(String status)? analyze,
+    TResult Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -146,7 +146,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(File file) openFile,
     required TResult Function() loading,
     required TResult Function() loaded,
-    required TResult Function(String status) analyze,
+    required TResult Function(AnalyzeResponse analyzeResponse) analyze,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -159,7 +159,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(File file)? openFile,
     TResult? Function()? loading,
     TResult? Function()? loaded,
-    TResult? Function(String status)? analyze,
+    TResult? Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -172,7 +172,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(File file)? openFile,
     TResult Function()? loading,
     TResult Function()? loaded,
-    TResult Function(String status)? analyze,
+    TResult Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -302,7 +302,7 @@ class _$OpenFileImpl implements _OpenFile {
     required TResult Function(File file) openFile,
     required TResult Function() loading,
     required TResult Function() loaded,
-    required TResult Function(String status) analyze,
+    required TResult Function(AnalyzeResponse analyzeResponse) analyze,
     required TResult Function(String message) error,
   }) {
     return openFile(file);
@@ -315,7 +315,7 @@ class _$OpenFileImpl implements _OpenFile {
     TResult? Function(File file)? openFile,
     TResult? Function()? loading,
     TResult? Function()? loaded,
-    TResult? Function(String status)? analyze,
+    TResult? Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult? Function(String message)? error,
   }) {
     return openFile?.call(file);
@@ -328,7 +328,7 @@ class _$OpenFileImpl implements _OpenFile {
     TResult Function(File file)? openFile,
     TResult Function()? loading,
     TResult Function()? loaded,
-    TResult Function(String status)? analyze,
+    TResult Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -439,7 +439,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(File file) openFile,
     required TResult Function() loading,
     required TResult Function() loaded,
-    required TResult Function(String status) analyze,
+    required TResult Function(AnalyzeResponse analyzeResponse) analyze,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -452,7 +452,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(File file)? openFile,
     TResult? Function()? loading,
     TResult? Function()? loaded,
-    TResult? Function(String status)? analyze,
+    TResult? Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -465,7 +465,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(File file)? openFile,
     TResult Function()? loading,
     TResult Function()? loaded,
-    TResult Function(String status)? analyze,
+    TResult Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -568,7 +568,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function(File file) openFile,
     required TResult Function() loading,
     required TResult Function() loaded,
-    required TResult Function(String status) analyze,
+    required TResult Function(AnalyzeResponse analyzeResponse) analyze,
     required TResult Function(String message) error,
   }) {
     return loaded();
@@ -581,7 +581,7 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function(File file)? openFile,
     TResult? Function()? loading,
     TResult? Function()? loaded,
-    TResult? Function(String status)? analyze,
+    TResult? Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call();
@@ -594,7 +594,7 @@ class _$LoadedImpl implements _Loaded {
     TResult Function(File file)? openFile,
     TResult Function()? loading,
     TResult Function()? loaded,
-    TResult Function(String status)? analyze,
+    TResult Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -658,7 +658,9 @@ abstract class _$$AnalyzeImplCopyWith<$Res> {
           _$AnalyzeImpl value, $Res Function(_$AnalyzeImpl) then) =
       __$$AnalyzeImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String status});
+  $Res call({AnalyzeResponse analyzeResponse});
+
+  $AnalyzeResponseCopyWith<$Res> get analyzeResponse;
 }
 
 /// @nodoc
@@ -674,28 +676,38 @@ class __$$AnalyzeImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = null,
+    Object? analyzeResponse = null,
   }) {
     return _then(_$AnalyzeImpl(
-      null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
+      null == analyzeResponse
+          ? _value.analyzeResponse
+          : analyzeResponse // ignore: cast_nullable_to_non_nullable
+              as AnalyzeResponse,
     ));
+  }
+
+  /// Create a copy of LoadDataState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AnalyzeResponseCopyWith<$Res> get analyzeResponse {
+    return $AnalyzeResponseCopyWith<$Res>(_value.analyzeResponse, (value) {
+      return _then(_value.copyWith(analyzeResponse: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$AnalyzeImpl implements _Analyze {
-  const _$AnalyzeImpl(this.status);
+  const _$AnalyzeImpl(this.analyzeResponse);
 
   @override
-  final String status;
+  final AnalyzeResponse analyzeResponse;
 
   @override
   String toString() {
-    return 'LoadDataState.analyze(status: $status)';
+    return 'LoadDataState.analyze(analyzeResponse: $analyzeResponse)';
   }
 
   @override
@@ -703,11 +715,12 @@ class _$AnalyzeImpl implements _Analyze {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AnalyzeImpl &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.analyzeResponse, analyzeResponse) ||
+                other.analyzeResponse == analyzeResponse));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status);
+  int get hashCode => Object.hash(runtimeType, analyzeResponse);
 
   /// Create a copy of LoadDataState
   /// with the given fields replaced by the non-null parameter values.
@@ -724,10 +737,10 @@ class _$AnalyzeImpl implements _Analyze {
     required TResult Function(File file) openFile,
     required TResult Function() loading,
     required TResult Function() loaded,
-    required TResult Function(String status) analyze,
+    required TResult Function(AnalyzeResponse analyzeResponse) analyze,
     required TResult Function(String message) error,
   }) {
-    return analyze(status);
+    return analyze(analyzeResponse);
   }
 
   @override
@@ -737,10 +750,10 @@ class _$AnalyzeImpl implements _Analyze {
     TResult? Function(File file)? openFile,
     TResult? Function()? loading,
     TResult? Function()? loaded,
-    TResult? Function(String status)? analyze,
+    TResult? Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult? Function(String message)? error,
   }) {
-    return analyze?.call(status);
+    return analyze?.call(analyzeResponse);
   }
 
   @override
@@ -750,12 +763,12 @@ class _$AnalyzeImpl implements _Analyze {
     TResult Function(File file)? openFile,
     TResult Function()? loading,
     TResult Function()? loaded,
-    TResult Function(String status)? analyze,
+    TResult Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (analyze != null) {
-      return analyze(status);
+      return analyze(analyzeResponse);
     }
     return orElse();
   }
@@ -805,9 +818,9 @@ class _$AnalyzeImpl implements _Analyze {
 }
 
 abstract class _Analyze implements LoadDataState {
-  const factory _Analyze(final String status) = _$AnalyzeImpl;
+  const factory _Analyze(final AnalyzeResponse analyzeResponse) = _$AnalyzeImpl;
 
-  String get status;
+  AnalyzeResponse get analyzeResponse;
 
   /// Create a copy of LoadDataState
   /// with the given fields replaced by the non-null parameter values.
@@ -888,7 +901,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(File file) openFile,
     required TResult Function() loading,
     required TResult Function() loaded,
-    required TResult Function(String status) analyze,
+    required TResult Function(AnalyzeResponse analyzeResponse) analyze,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -901,7 +914,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(File file)? openFile,
     TResult? Function()? loading,
     TResult? Function()? loaded,
-    TResult? Function(String status)? analyze,
+    TResult? Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -914,7 +927,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(File file)? openFile,
     TResult Function()? loading,
     TResult Function()? loaded,
-    TResult Function(String status)? analyze,
+    TResult Function(AnalyzeResponse analyzeResponse)? analyze,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

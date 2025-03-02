@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:it4gaz/src/api/api_service.dart';
+import 'package:it4gaz/src/api/data/responces/analyze_response.dart';
 import 'package:it4gaz/src/core/di/service_locator.dart';
 
 part 'load_data_controller.freezed.dart';
@@ -13,7 +14,8 @@ class LoadDataState with _$LoadDataState {
   const factory LoadDataState.openFile(File file) = _OpenFile;
   const factory LoadDataState.loading() = _Loading;
   const factory LoadDataState.loaded() = _Loaded;
-  const factory LoadDataState.analyze(String status) = _Analyze;
+  const factory LoadDataState.analyze(AnalyzeResponse analyzeResponse) =
+      _Analyze;
   const factory LoadDataState.error(String message) = _Error;
 }
 
@@ -30,7 +32,7 @@ class LoadDataController extends Cubit<LoadDataState> {
 
     try {
       final response = await restClient.analyze(file: file);
-      emit(LoadDataState.analyze(response.status));
+      emit(LoadDataState.analyze(response));
     } catch (e) {
       emit(LoadDataState.error(e.toString()));
     }

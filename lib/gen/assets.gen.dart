@@ -12,37 +12,40 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
-  /// File path: assets/icons/box_icon.svg
-  AssetGenImage get boxIcon => const AssetGenImage('../assets/icons/box_icon.png');
+  /// File path: assets/icons/box_icon.png
+  AssetGenImage get boxIcon => const AssetGenImage('assets/icons/box_icon.png');
 
-  AssetGenImage get warningIcon =>
-      const AssetGenImage('../assets/icons/warning_icon.png');
+  /// File path: assets/icons/clock.png
+  AssetGenImage get clock => const AssetGenImage('assets/icons/clock.png');
 
-      AssetGenImage get clockIcon =>
-      const AssetGenImage('../assets/icons/clock.png');
-
-  /// File path: assets/icons/diog_icon.svg
+  /// File path: assets/icons/diog_icon.png
   AssetGenImage get diogIcon =>
-      const AssetGenImage('../assets/icons/diog_icon.png');
+      const AssetGenImage('assets/icons/diog_icon.png');
 
-  /// File path: assets/icons/graph_icon.svg
+  /// File path: assets/icons/graph_icon.png
   AssetGenImage get graphIcon =>
-      const AssetGenImage('../assets/icons/graph_icon.png');
+      const AssetGenImage('assets/icons/graph_icon.png');
 
-  /// File path: assets/icons/home_icon.svg
+  /// File path: assets/icons/home_icon.png
   AssetGenImage get homeIcon =>
-      const AssetGenImage('../assets/icons/home_icon.png');
+      const AssetGenImage('assets/icons/home_icon.png');
 
-  /// File path: assets/icons/tab_icon.svg
-  AssetGenImage get tabIcon => const AssetGenImage('../assets/icons/tab_icon.png');
+  /// File path: assets/icons/tab_icon.png
+  AssetGenImage get tabIcon => const AssetGenImage('assets/icons/tab_icon.png');
+
+  /// File path: assets/icons/warning_icon.png
+  AssetGenImage get warningIcon =>
+      const AssetGenImage('assets/icons/warning_icon.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
     boxIcon,
+    clock,
     diogIcon,
     graphIcon,
     homeIcon,
     tabIcon,
+    warningIcon,
   ];
 }
 

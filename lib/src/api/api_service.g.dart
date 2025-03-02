@@ -20,7 +20,7 @@ class _RestClient implements RestClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<AnalyzeResponce> analyze({required File file}) async {
+  Future<AnalyzeResponse> analyze({required File file}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -34,7 +34,7 @@ class _RestClient implements RestClient {
         ),
       ),
     );
-    final _options = _setStreamType<AnalyzeResponce>(
+    final _options = _setStreamType<AnalyzeResponse>(
       Options(
         method: 'POST',
         headers: _headers,
@@ -50,9 +50,9 @@ class _RestClient implements RestClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late AnalyzeResponce _value;
+    late AnalyzeResponse _value;
     try {
-      _value = AnalyzeResponce.fromJson(_result.data!);
+      _value = AnalyzeResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

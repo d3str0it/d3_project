@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:it4gaz/gen/assets.gen.dart';
 import 'package:it4gaz/src/widgets/navigation_button_widget.dart';
 import 'package:it4gaz/src/screens/tables/tables_screen.dart';
+
 // Модель для уведомления
 class NotificationItem {
   final String title;
@@ -29,14 +30,14 @@ class NotificationCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
       decoration: BoxDecoration(
-        color: Colors.white, 
-        borderRadius: BorderRadius.circular(10), 
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(48, 0, 0, 0), 
-            blurRadius: 5, 
-            spreadRadius: 2, 
-            offset: const Offset(0, 2), 
+            color: const Color.fromARGB(48, 0, 0, 0),
+            blurRadius: 5,
+            spreadRadius: 2,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -72,18 +73,19 @@ class NotificationCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-             
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Значение: ${notification.title}',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     'достигла уровня: Критический',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ],
               ),
@@ -96,7 +98,7 @@ class NotificationCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Image.asset(Assets.icons.clockIcon.path),
+                    Image.asset(Assets.icons.clock.path),
                     const SizedBox(width: 4),
                     Text(
                       '${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}, ${notification.timeReceived.hour}:${notification.timeReceived.minute.toString().padLeft(2, '0')}',
@@ -105,14 +107,13 @@ class NotificationCard extends StatelessWidget {
                   ],
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {
-                         
-                  },
+                  onPressed: () {},
                   icon: const Icon(Icons.arrow_forward, size: 14),
                   label: const Text('Перейти'),
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 12),
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   ),
                 ),
               ],
@@ -135,8 +136,8 @@ class _NotificationListState extends State<NotificationList> {
   @override
   void initState() {
     super.initState();
-    
-    for (int i = 0; i < 10; i++) { 
+
+    for (int i = 0; i < 10; i++) {
       notifications.add(
         NotificationItem(
           title: "Уведомление ${i + 1}",
@@ -181,7 +182,8 @@ class _NotificationListState extends State<NotificationList> {
             height: 50,
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 233, 226, 226),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(10)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -229,5 +231,4 @@ class _NotificationListState extends State<NotificationList> {
       ),
     );
   }
-} 
-  
+}
